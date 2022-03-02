@@ -10,6 +10,7 @@ import { FsTrustedDevicesModule } from '@firestitch/trusted-devices';
 import { FsLabelModule } from '@firestitch/label';
 import { FsFormModule } from '@firestitch/form';
 import { FsStoreModule } from '@firestitch/store';
+import { FsDeviceModule } from '@firestitch/device';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -20,6 +21,7 @@ import {
 } from './components';
 import { AppComponent } from './app.component';
 import { TrustedDevicesComponent } from './components/trusted-devices';
+
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
@@ -40,6 +42,7 @@ const routes: Routes = [
     FsMessageModule.forRoot(),
     ToastrModule.forRoot({ preventDuplicates: true }),
     RouterModule.forRoot(routes),
+    FsDeviceModule.forRoot(),
   ],
   declarations: [
     AppComponent,

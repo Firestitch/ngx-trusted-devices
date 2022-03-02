@@ -22,7 +22,7 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
     FsListModule,
     FsDateModule,
     FsCountryModule,
-    FsDeviceModule.forRoot(),
+    FsDeviceModule,
   ],
   exports: [
     FsTrustedDevicesComponent,
@@ -33,10 +33,10 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
   providers: [],
 })
 export class FsTrustedDevicesModule {
-  static forRoot(): ModuleWithProviders<FsTrustedDevicesModule> {
-    return {
-      ngModule: FsTrustedDevicesModule,
-      // providers: [FsComponentService]
-    };
-  }
+  // static forRoot(): ModuleWithProviders<FsTrustedDevicesModule> {
+  //   return {
+  //     ngModule: FsTrustedDevicesModule,
+  //     providers: [FsDeviceModule.forRoot().providers]
+  //   };
+  // }
 }
