@@ -28,13 +28,8 @@
               { "glob": "**/*", "input": "./src/app/assets", "output": "./assets/@firestitch/trusted-devices" },
               {
                 "glob": "**/*",
-                "input": "node_modules/@firestitch/country/assets",
-                "output": "assets/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/country-flag-icons/3x2",
-                "output": "assets/country-flags/"
+                "input": "node_modules/@firestitch/device/assets",
+                "output": "assets/@firestitch/device/"
               }
             ],
             "styles": [
