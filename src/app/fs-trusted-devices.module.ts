@@ -8,6 +8,7 @@ import { FsListModule } from '@firestitch/list';
 import { FsDateModule } from '@firestitch/date';
 import { FsCountryModule } from '@firestitch/country';
 import { FsDeviceModule } from '@firestitch/device';
+import { FsBadgeModule } from '@firestitch/badge';
 
 import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
 
@@ -23,6 +24,7 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
     FsDateModule,
     FsCountryModule,
     FsDeviceModule,
+    FsBadgeModule,
   ],
   exports: [
     FsTrustedDevicesComponent,
