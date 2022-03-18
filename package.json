@@ -2,7 +2,7 @@
   "name": "@firestitch/trusted-devices",
   "title": "Trusted Devices",
   "description": "@firestitch/trusted-devices",
-  "version": "12.0.0",
+  "version": "12.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-trusted-devices"
@@ -50,7 +50,7 @@
     "@firestitch/clear": "^8.1.0",
     "@firestitch/common": "^8.0.12",
     "@firestitch/core": "^9.1.2",
-    "@firestitch/country": "^10.0.9",
+    "@firestitch/country": "^10.0.13",
     "@firestitch/date": "^8.0.26",
     "@firestitch/datepicker": "^9.2.3",
     "@firestitch/device": "^12.0.7",
@@ -75,6 +75,7 @@
     "@firestitch/selection": "^9.1.1",
     "@firestitch/skeleton": "^8.1.5",
     "@firestitch/store": "^8.1.2",
+    "@firestitch/ip": "^12.0.2",
     "codelyzer": "^6.0.0",
     "cpx": "^1.5.0",
     "cypress": "8.0.0",

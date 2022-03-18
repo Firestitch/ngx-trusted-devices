@@ -38,10 +38,7 @@ export class TrustedDevicesComponent implements OnInit {
           browserName: 'Chrome',
           userAgent: 'Mozilla/5.0',
         },
-        location: {
-          id: Math.random(),
-          isoCode: 'CA',
-        },
+        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
         activityDate: new Date(),
         createDate: new Date(),
         guid: guid(),
@@ -65,10 +62,7 @@ export class TrustedDevicesComponent implements OnInit {
           browserVersion: '1.0.0',
           userAgent: 'Mozilla/5.0',
         },
-        location: {
-          id: Math.random(),
-          isoCode: 'CA',
-        },
+        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
         activityDate: new Date(),
         createDate: new Date(),
         guid: guid(),

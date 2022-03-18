@@ -1,10 +1,10 @@
 <fs-list [config]="listConfig">
-  <fs-list-column title="Name">
+  <fs-list-column title="Account" [show]="false" name="account">
     <ng-template fs-list-cell let-row="row">
       <div *ngIf="row.account" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <fs-badge shape="circle" image="{{ row.account.avatarUrl }}"></fs-badge>
         <div fxLayout="column">
-          <a (click)="accountClicked(row.account)">{{ row.account.name }}</a>
+          {{ row.account.name }}
           <small *ngIf="row.account.email">{{ row.account.email }}</small>
         </div>
       </div>
@@ -35,7 +35,14 @@
   </fs-list-column>
   <fs-list-column title="Location">
     <ng-template fs-list-cell let-row="row">
-      <fs-country [code]="row.location.isoCode"></fs-country>
+      <fs-ip
+        *ngIf="row.ip"
+        [ip]="row.ip.ip"
+        [country]="row.ip.country"
+        [region]="row.ip.region"
+        [lat]="row.ip.lat"
+        [lng]="row.ip.lng">
+      </fs-ip>
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Last signed in">

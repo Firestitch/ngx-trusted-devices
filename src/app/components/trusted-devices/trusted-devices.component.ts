@@ -11,10 +11,9 @@ import {
 
 import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
-import { FsCountry } from '@firestitch/country';
 
 import { Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
@@ -33,15 +32,15 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
     data: ITrustedDevice[];
     paging?: any;
   }>();
+  
+  @Input()
+  public showAccount = true;
 
   @Input()
   public removeTrustedDevice = (trustedDevice: ITrustedDevice) => new Observable<any>();
 
   @Input()
   public signOutTrustedDevice = (trustedDevice:  ITrustedDevice) => new Observable<any>();
-
-  @Input()
-  public currentDeviceGuid: string = null;
 
   @Output()
   public accountClick: EventEmitter<ITrustedDeviceAccount> = new EventEmitter< ITrustedDeviceAccount>();
@@ -53,18 +52,8 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  constructor(
-    private _fsCountry: FsCountry,
-  ) { }
-
   public ngOnInit(): void {
-    this._fsCountry.ready$
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe(() => {
-        this._initListConfig();
-      });
+    this._initListConfig();
   }
 
   public accountClicked(account: ITrustedDeviceAccount): void {
@@ -108,6 +97,13 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
       fetch: (query) => {
         return this.fetchTrustedDevices(query)
           .pipe(
+            tap((response) => {
+              const show = response.data.some((row) => {
+                return !!row.account;
+              });
+
+              this.listComponent.columnVisibility('account',show);
+            }),
             map((response) => {
               return {
                 data: response.data,

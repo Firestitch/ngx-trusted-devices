@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -8,6 +8,7 @@ import { FsListModule } from '@firestitch/list';
 import { FsDateModule } from '@firestitch/date';
 import { FsCountryModule } from '@firestitch/country';
 import { FsDeviceModule } from '@firestitch/device';
+import { FsIpModule } from '@firestitch/ip';
 import { FsBadgeModule } from '@firestitch/badge';
 
 import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
@@ -25,6 +26,7 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
     FsCountryModule,
     FsDeviceModule,
     FsBadgeModule,
+    FsIpModule,
   ],
   exports: [
     FsTrustedDevicesComponent,
