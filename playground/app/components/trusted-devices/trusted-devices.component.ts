@@ -39,7 +39,7 @@ export class TrustedDevicesComponent implements OnInit {
           userAgent: 'Mozilla/5.0',
         },
         ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
-        activityDate: new Date(),
+        siginDate: new Date(),
         createDate: new Date(),
         guid: guid(),
         state: 'active',
@@ -63,7 +63,7 @@ export class TrustedDevicesComponent implements OnInit {
           userAgent: 'Mozilla/5.0',
         },
         ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
-        activityDate: new Date(),
+        siginDate: new Date(),
         createDate: new Date(),
         guid: guid(),
         state: 'active',
@@ -71,18 +71,18 @@ export class TrustedDevicesComponent implements OnInit {
     ];
   }
 
-  public fetchTrustedDevices = (query) => {
+  public trustedDevicesFetch = (query) => {
     return of({
       data: this.trustedDevices,
     });
   }
 
-  public removeTrustedDevice = (data) => {
-    console.log('Removed', data);
+  public trustedDeviceDelete = (data) => {
+    console.log('Deleted', data);
     return of(data);
   }
 
-  public signOutTrustedDevice = (data) => {
+  public trustedDeviceSignOut = (data) => {
     console.log('Sign Out', data);
     return of(data);
   }

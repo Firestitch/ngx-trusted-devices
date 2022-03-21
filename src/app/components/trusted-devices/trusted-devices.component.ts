@@ -17,6 +17,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
+import { FsMessage } from '@firestitch/message';
 
 
 @Component({
@@ -28,19 +29,19 @@ import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
 export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   @Input()
-  public fetchTrustedDevices = (query: any) => new Observable<{
+  public trustedDevicesFetch: (query: any) => Observable<{
     data: ITrustedDevice[];
     paging?: any;
-  }>();
+  }>;
   
   @Input()
   public showAccount = true;
 
   @Input()
-  public removeTrustedDevice = (trustedDevice: ITrustedDevice) => new Observable<any>();
+  public trustedDeviceDelete: (trustedDevice: ITrustedDevice) => Observable<any>;
 
   @Input()
-  public signOutTrustedDevice = (trustedDevice:  ITrustedDevice) => new Observable<any>();
+  public trustedDeviceSignOut: (trustedDevice:  ITrustedDevice) => Observable<any>;
 
   @Output()
   public accountClick: EventEmitter<ITrustedDeviceAccount> = new EventEmitter< ITrustedDeviceAccount>();
@@ -51,6 +52,10 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
   public listConfig: FsListConfig;
 
   private _destroy$ = new Subject();
+
+  public constructor(
+    private _message: FsMessage,
+  ) {}
 
   public ngOnInit(): void {
     this._initListConfig();
@@ -77,14 +82,22 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
       rowActions: [
         {
           click: (data) => {
-            return this.signOutTrustedDevice(data);
+            this.trustedDeviceSignOut(data)
+            .subscribe(() => {
+              this._message.success('Signed out of all devices');  
+            });
           },
           menu: true,
           label: 'Sign Out',
         },
         {
           click: (data) => {
-            return this.removeTrustedDevice(data);
+            return this.trustedDeviceDelete(data)
+            .pipe(
+              tap(() => {
+                this._message.success('Deleted trusted device');  
+              }),
+            )
           },
           remove: {
             title: 'Confirm',
@@ -95,7 +108,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
         },
       ],
       fetch: (query) => {
-        return this.fetchTrustedDevices(query)
+        return this.trustedDevicesFetch(query)
           .pipe(
             tap((response) => {
               const show = response.data.some((row) => {

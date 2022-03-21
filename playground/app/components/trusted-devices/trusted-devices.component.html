@@ -1,7 +1,7 @@
 <fs-trusted-devices
   *ngIf="trustedDevices"
-  [fetchTrustedDevices]="fetchTrustedDevices"
-  [removeTrustedDevice]="removeTrustedDevice"
-  [signOutTrustedDevice]="signOutTrustedDevice"
+  [trustedDevicesFetch]="trustedDevicesFetch"
+  [trustedDeviceDelete]="trustedDeviceDelete"
+  [trustedDeviceSignOut]="trustedDeviceSignOut"
   (accountClick)="accountClick($event)"
 ></fs-trusted-devices>
