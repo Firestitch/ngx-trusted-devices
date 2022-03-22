@@ -10,13 +10,16 @@
       </div>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="OS">
+  <fs-list-column title="Device" class="col-device" align="center">
     <ng-template fs-list-cell let-row="row">
-      <fs-device-os
-        *ngIf="row.device"
-        [type]="row.device.type"
-        [os]="row.device.osType"
-      ></fs-device-os>
+      <div class="container">
+        <fs-trusted-current-device *ngIf="row.currentDevice"></fs-trusted-current-device>
+        <fs-device-os
+          *ngIf="row.device"
+          [type]="row.device.type"
+          [os]="row.device.osType">
+        </fs-device-os>
+      </div>
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Browser">

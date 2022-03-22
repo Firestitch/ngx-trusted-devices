@@ -1,0 +1,17 @@
+.current-device {
+  z-index: 1;
+  position: relative;
+
+  .check, .circle {
+    position: absolute;
+    color: #027DB4;
+    top: 0;
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+
+  .circle {
+    color: #fff;
+  }
+}

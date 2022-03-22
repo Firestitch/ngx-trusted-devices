@@ -43,6 +43,7 @@ export class TrustedDevicesComponent implements OnInit {
         createDate: new Date(),
         guid: guid(),
         state: 'active',
+        currentDevice: true,
       },
       {
         id: Math.random(),

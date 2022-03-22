@@ -1,0 +1,12 @@
+:host ::ng-deep {
+  .col-device .container {
+    position: relative;
+    display: inline-block;
+
+    fs-trusted-current-device {
+      position: absolute;
+      right: 8px;
+      top: -6px;
+    }
+  }
+}

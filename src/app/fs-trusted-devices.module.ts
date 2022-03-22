@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
 import { FsListModule } from '@firestitch/list';
@@ -12,6 +13,7 @@ import { FsIpModule } from '@firestitch/ip';
 import { FsBadgeModule } from '@firestitch/badge';
 
 import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
+import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-device/trusted-current-device.component';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
     FlexLayoutModule,
 
     MatIconModule,
+    MatTooltipModule,
 
     FsListModule,
     FsDateModule,
@@ -30,17 +33,12 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
   ],
   exports: [
     FsTrustedDevicesComponent,
+    FsTrustedCurrentDeviceComponent,
   ],
   declarations: [
     FsTrustedDevicesComponent,
+    FsTrustedCurrentDeviceComponent,
   ],
-  providers: [],
 })
 export class FsTrustedDevicesModule {
-  // static forRoot(): ModuleWithProviders<FsTrustedDevicesModule> {
-  //   return {
-  //     ngModule: FsTrustedDevicesModule,
-  //     providers: [FsDeviceModule.forRoot().providers]
-  //   };
-  // }
 }
