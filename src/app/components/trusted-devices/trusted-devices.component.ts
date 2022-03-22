@@ -72,13 +72,6 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   private _initListConfig(): void {
     this.listConfig = {
-      filters: [
-        {
-          name: 'keyword',
-          type: ItemType.Keyword,
-          label: 'Search',
-        },
-      ],
       rowActions: [
         {
           click: (data) => {

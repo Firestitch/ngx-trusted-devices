@@ -8,7 +8,7 @@ export interface ITrustedDevice {
   account?: ITrustedDeviceAccount;
   device?: ITrustedDeviceDevice;
   ip?: ITrustedDeviceIp;
-  siginDate?: Date;
+  signinDate?: Date;
   activityDate?: Date;
   createDate?: Date;
   guid?: string;
