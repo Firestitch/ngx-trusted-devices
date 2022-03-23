@@ -17,7 +17,8 @@
         <fs-device-os
           *ngIf="row.device"
           [type]="row.device.type"
-          [os]="row.device.osType">
+          [os]="row.device.osType"
+          (click)="openTrustedDeviceDialog(row)">
         </fs-device-os>
       </div>
     </ng-template>
@@ -28,12 +29,8 @@
         *ngIf="row.device"
         [type]="row.device.browserType"
         [showName]="true"
+        (click)="openTrustedDeviceDialog(row)"
       ></fs-device-browser>
-    </ng-template>
-  </fs-list-column>
-  <fs-list-column title="Added">
-    <ng-template fs-list-cell let-row="row">
-      {{ row.createDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Location">
@@ -48,9 +45,14 @@
       </fs-ip>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Last signed in">
+  <fs-list-column title="Last Active">
     <ng-template fs-list-cell let-row="row">
       {{ row.signinDate | fsDateAgo }}
+    </ng-template>
+  </fs-list-column>
+  <fs-list-column title="Added">
+    <ng-template fs-list-cell let-row="row">
+      {{ row.createDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
 </fs-list>

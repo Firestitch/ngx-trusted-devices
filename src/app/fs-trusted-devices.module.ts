@@ -4,6 +4,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { FsListModule } from '@firestitch/list';
 import { FsDateModule } from '@firestitch/date';
@@ -11,9 +13,12 @@ import { FsCountryModule } from '@firestitch/country';
 import { FsDeviceModule } from '@firestitch/device';
 import { FsIpModule } from '@firestitch/ip';
 import { FsBadgeModule } from '@firestitch/badge';
+import { FsDialogModule } from '@firestitch/dialog';
+import { FsLabelModule } from '@firestitch/label';
 
 import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
 import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-device/trusted-current-device.component';
+import { FsTrustedDeviceComponent } from './components/trusted-device/trusted-device.component';
 
 
 @NgModule({
@@ -23,6 +28,8 @@ import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-de
 
     MatIconModule,
     MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
 
     FsListModule,
     FsDateModule,
@@ -30,6 +37,8 @@ import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-de
     FsDeviceModule,
     FsBadgeModule,
     FsIpModule,
+    FsDialogModule,
+    FsLabelModule,
   ],
   exports: [
     FsTrustedDevicesComponent,
@@ -38,6 +47,7 @@ import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-de
   declarations: [
     FsTrustedDevicesComponent,
     FsTrustedCurrentDeviceComponent,
+    FsTrustedDeviceComponent,
   ],
 })
 export class FsTrustedDevicesModule {

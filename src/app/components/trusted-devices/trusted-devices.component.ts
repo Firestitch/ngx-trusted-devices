@@ -9,15 +9,19 @@ import {
   OnDestroy,
 } from '@angular/core';
 
+import { MatDialog } from '@angular/material/dialog';
+
 import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
+import { FsMessage } from '@firestitch/message';
 
 import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
-import { FsMessage } from '@firestitch/message';
+import { FsTrustedDeviceComponent } from '../trusted-device/trusted-device.component';
+
 
 
 @Component({
@@ -33,7 +37,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
     data: ITrustedDevice[];
     paging?: any;
   }>;
-  
+
   @Input()
   public showAccount = true;
 
@@ -55,7 +59,8 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   public constructor(
     private _message: FsMessage,
-  ) {}
+    private _dialog: MatDialog,
+  ) { }
 
   public ngOnInit(): void {
     this._initListConfig();
@@ -63,6 +68,19 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   public accountClicked(account: ITrustedDeviceAccount): void {
     this.accountClick.emit(account);
+  }
+
+  public openTrustedDeviceDialog(trustedDevice: ITrustedDevice): void {
+    const dialogRef = this._dialog.open(FsTrustedDeviceComponent, {
+      data: {
+        trustedDevice,
+        trustedDeviceDelete: this.trustedDeviceDelete,
+        trustedDeviceSignOut: this.trustedDeviceSignOut,
+      },
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(() => this.listComponent.reload());
   }
 
   public ngOnDestroy(): void {
@@ -77,7 +95,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
           click: (data) => {
             this.trustedDeviceSignOut(data)
             .subscribe(() => {
-              this._message.success('Signed out of all devices');  
+              this._message.success('Signed out of all devices');
             });
           },
           menu: true,
@@ -88,7 +106,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
             return this.trustedDeviceDelete(data)
             .pipe(
               tap(() => {
-                this._message.success('Deleted trusted device');  
+                this._message.success('Deleted trusted device');
               }),
             )
           },
@@ -108,7 +126,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
                 return !!row.account;
               });
 
-              this.listComponent.columnVisibility('account',show);
+              this.listComponent.columnVisibility('account', show);
             }),
             map((response) => {
               return {
