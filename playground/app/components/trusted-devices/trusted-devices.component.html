@@ -3,5 +3,11 @@
   [trustedDevicesFetch]="trustedDevicesFetch"
   [trustedDeviceDelete]="trustedDeviceDelete"
   [trustedDeviceSignOut]="trustedDeviceSignOut"
-  (accountClick)="accountClick($event)"
-></fs-trusted-devices>
+  (accountClick)="accountClick($event)">
+</fs-trusted-devices>
+
+<br><br><br>
+<fs-trusted-device-os-browser-ip  
+  [currentDevice]="true"
+  [trustedDevice]="trustedDevice">
+</fs-trusted-device-os-browser-ip>

@@ -19,6 +19,7 @@ import { FsLabelModule } from '@firestitch/label';
 import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
 import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-device/trusted-current-device.component';
 import { FsTrustedDeviceComponent } from './components/trusted-device/trusted-device.component';
+import { FsTrustedDeviceOsBrowserIpComponent } from './components/trusted-device-os-browser-ip/trusted-device-os-browser-ip.component';
 
 
 @NgModule({
@@ -43,11 +44,13 @@ import { FsTrustedDeviceComponent } from './components/trusted-device/trusted-de
   exports: [
     FsTrustedDevicesComponent,
     FsTrustedCurrentDeviceComponent,
+    FsTrustedDeviceOsBrowserIpComponent,
   ],
   declarations: [
     FsTrustedDevicesComponent,
     FsTrustedCurrentDeviceComponent,
     FsTrustedDeviceComponent,
+    FsTrustedDeviceOsBrowserIpComponent,
   ],
 })
 export class FsTrustedDevicesModule {

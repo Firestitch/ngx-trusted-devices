@@ -1,0 +1,25 @@
+<div class="trusted-device">
+  <div class="device">
+    <fs-trusted-current-device *ngIf="currentDevice"></fs-trusted-current-device>
+    <fs-device-os
+      *ngIf="trustedDevice.device"
+      [type]="trustedDevice.device.type"
+      [os]="trustedDevice.device.osType"
+      [version]="trustedDevice.device.osVersion">
+    </fs-device-os>
+  </div>
+  <div class="column">
+    <fs-device-browser
+      *ngIf="trustedDevice.device"
+      [type]="trustedDevice.device.browserType"
+      [showName]="true"
+      [version]="trustedDevice.device.browserVersion"
+      [showIcon]="false">
+    </fs-device-browser>
+    <fs-country
+      *ngIf="trustedDevice.ip" 
+      [matTooltip]="trustedDevice.ip.ip"
+      [code]="trustedDevice.ip.country" [region]="trustedDevice.ip.region">
+    </fs-country>
+  </div>
+</div>

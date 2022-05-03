@@ -15,6 +15,7 @@ import { of } from 'rxjs';
 export class TrustedDevicesComponent implements OnInit {
 
   public trustedDevices: ITrustedDevice[] = null;
+  public trustedDevice: ITrustedDevice;
 
   constructor() { }
 
@@ -38,7 +39,7 @@ export class TrustedDevicesComponent implements OnInit {
           browserName: 'Chrome',
           userAgent: 'Mozilla/5.0',
         },
-        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
+        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":"Kassel"},
         signinDate: new Date(),
         createDate: new Date(),
         guid: guid(),
@@ -70,6 +71,8 @@ export class TrustedDevicesComponent implements OnInit {
         state: 'active',
       },
     ];
+
+    this.trustedDevice = this.trustedDevices[0];
   }
 
   public trustedDevicesFetch = (query) => {
