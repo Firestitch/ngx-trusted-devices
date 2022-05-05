@@ -64,7 +64,6 @@ export class FsTrustedDeviceComponent implements OnDestroy {
   public signOut(): void {
     this.trustedDeviceSignOut(this.trustedDevice)
       .subscribe(() => {
-        this._fsMessage.success('Signed out of all devices');
         this._dialogRef.close(true);
       });
   }

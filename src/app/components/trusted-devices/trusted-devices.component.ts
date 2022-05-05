@@ -94,9 +94,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
         {
           click: (data) => {
             this.trustedDeviceSignOut(data)
-            .subscribe(() => {
-              this._message.success('Signed out of all devices');
-            });
+              .subscribe(() => { });
           },
           menu: true,
           label: 'Sign Out',
