@@ -12,15 +12,15 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 
 import { FsListComponent, FsListConfig } from '@firestitch/list';
-import { ItemType } from '@firestitch/filter';
 import { FsMessage } from '@firestitch/message';
 
 import { Observable, Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
 import { FsTrustedDeviceComponent } from '../trusted-device/trusted-device.component';
+import { FsPrompt } from '@firestitch/prompt';
 
 
 
@@ -59,6 +59,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   public constructor(
     private _message: FsMessage,
+    private _prompt: FsPrompt,
     private _dialog: MatDialog,
   ) { }
 
@@ -93,8 +94,15 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
       rowActions: [
         {
           click: (data) => {
-            this.trustedDeviceSignOut(data)
-              .subscribe(() => { });
+            this._prompt.confirm({
+              title: 'Sign Out Device',
+              template: 'This will remove access to your account for the signed in device',
+              commitLabel: 'Sign Out'
+            })
+              .pipe(
+                switchMap(() => this.trustedDeviceSignOut(data))
+              )
+              .subscribe();
           },
           menu: true,
           label: 'Sign Out',
@@ -110,7 +118,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
           },
           remove: {
             title: 'Confirm',
-            template: 'Are you sure you would like to delete this record?',
+            template: 'Are you sure you would like to delete this trusted device?',
           },
           menu: true,
           label: 'Delete',

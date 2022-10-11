@@ -37,8 +37,8 @@ export class FsTrustedDeviceComponent implements OnDestroy {
       trustedDeviceDelete: (trustedDevice: ITrustedDevice) => Observable<any>;
       trustedDeviceSignOut: (trustedDevice:  ITrustedDevice) => Observable<any>;
     },
-    private _fsPrompt: FsPrompt,
-    private _fsMessage: FsMessage,
+    private _prompt: FsPrompt,
+    private _message: FsMessage,
     private _dialogRef: MatDialogRef<FsTrustedDeviceComponent>,
   ) {
     this.trustedDevice = this._data.trustedDevice;
@@ -47,16 +47,16 @@ export class FsTrustedDeviceComponent implements OnDestroy {
   }
 
   public delete(): void {
-    this._fsPrompt.confirm({
+    this._prompt.confirm({
       title: 'Confirm',
-      template: 'Are you sure you would like to delete this record?',
+      template: 'Are you sure you would like to delete this trusted device?',
     })
       .pipe(
         switchMap(() => this.trustedDeviceDelete(this.trustedDevice)),
         takeUntil(this._destroy$),
       )
       .subscribe(() => {
-        this._fsMessage.success('Deleted trusted device');
+        this._message.success('Deleted trusted device');
         this._dialogRef.close(true);
       });
   }
