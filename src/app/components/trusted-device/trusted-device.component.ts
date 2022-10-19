@@ -1,76 +1,20 @@
 import {
   Component,
-  Inject,
   ChangeDetectionStrategy,
-  OnDestroy,
+  Input,
 } from '@angular/core';
-
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
-import { FsPrompt } from '@firestitch/prompt';
-import { FsMessage } from '@firestitch/message';
-
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, switchMap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 
 
 @Component({
+  selector: 'fs-trusted-device',
   templateUrl: './trusted-device.component.html',
   styleUrls: [ './trusted-device.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FsTrustedDeviceComponent implements OnDestroy {
+export class FsTrustedDeviceComponent {
 
-  public trustedDevice: ITrustedDevice = null;
-
-  public trustedDeviceDelete: (trustedDevice: ITrustedDevice) => Observable<any>;
-
-  public trustedDeviceSignOut: (trustedDevice:  ITrustedDevice) => Observable<any>;
-
-  private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private _data: {
-      trustedDevice: ITrustedDevice;
-      trustedDeviceDelete: (trustedDevice: ITrustedDevice) => Observable<any>;
-      trustedDeviceSignOut: (trustedDevice:  ITrustedDevice) => Observable<any>;
-    },
-    private _prompt: FsPrompt,
-    private _message: FsMessage,
-    private _dialogRef: MatDialogRef<FsTrustedDeviceComponent>,
-  ) {
-    this.trustedDevice = this._data.trustedDevice;
-    this.trustedDeviceDelete = this._data.trustedDeviceDelete;
-    this.trustedDeviceSignOut = this._data.trustedDeviceSignOut;
-  }
-
-  public delete(): void {
-    this._prompt.confirm({
-      title: 'Confirm',
-      template: 'Are you sure you would like to delete this trusted device?',
-    })
-      .pipe(
-        switchMap(() => this.trustedDeviceDelete(this.trustedDevice)),
-        takeUntil(this._destroy$),
-      )
-      .subscribe(() => {
-        this._message.success('Deleted trusted device');
-        this._dialogRef.close(true);
-      });
-  }
-
-  public signOut(): void {
-    this.trustedDeviceSignOut(this.trustedDevice)
-      .subscribe(() => {
-        this._dialogRef.close(true);
-      });
-  }
-
-  public ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-  }
-
+  @Input() public trustedDevice: ITrustedDevice;
+  @Input() public currentDevice = false;
 }

@@ -16,10 +16,8 @@ import { FsBadgeModule } from '@firestitch/badge';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsLabelModule } from '@firestitch/label';
 
-import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
 import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-device/trusted-current-device.component';
-import { FsTrustedDeviceComponent } from './components/trusted-device/trusted-device.component';
-import { FsTrustedDeviceOsBrowserIpComponent } from './components/trusted-device-os-browser-ip/trusted-device-os-browser-ip.component';
+import { FsTrustedDeviceDialogComponent, FsTrustedDeviceComponent, FsTrustedDevicesComponent } from './components';
 
 
 @NgModule({
@@ -44,13 +42,13 @@ import { FsTrustedDeviceOsBrowserIpComponent } from './components/trusted-device
   exports: [
     FsTrustedDevicesComponent,
     FsTrustedCurrentDeviceComponent,
-    FsTrustedDeviceOsBrowserIpComponent,
+    FsTrustedDeviceComponent,
   ],
   declarations: [
     FsTrustedDevicesComponent,
     FsTrustedCurrentDeviceComponent,
+    FsTrustedDeviceDialogComponent,
     FsTrustedDeviceComponent,
-    FsTrustedDeviceOsBrowserIpComponent,
   ],
 })
 export class FsTrustedDevicesModule {

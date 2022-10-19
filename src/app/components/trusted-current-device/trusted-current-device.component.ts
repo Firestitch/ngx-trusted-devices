@@ -1,6 +1,7 @@
 import {
   Component,
   ChangeDetectionStrategy,
+  Input,
 } from '@angular/core';
 
 
@@ -11,4 +12,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsTrustedCurrentDeviceComponent {
+
+  @Input() public tooltip = true;
 }

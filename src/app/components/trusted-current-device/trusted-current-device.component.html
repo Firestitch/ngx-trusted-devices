@@ -3,7 +3,8 @@
   <mat-icon class="circle">circle</mat-icon>
   <mat-icon 
       class="check"
-      matTooltip="This device">
+      [matTooltip]="'Your current session'"
+      [matTooltipDisabled]="!tooltip">
     check_circle
   </mat-icon>
 </div>

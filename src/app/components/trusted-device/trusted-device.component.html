@@ -1,71 +1,33 @@
-<fs-dialog>
-  <h1 mat-dialog-title>Trusted Device</h1>
-  <mat-dialog-content>
-    <div class="content">
-      <fs-label-field *ngIf="trustedDevice.device">
-        <fs-label>Operating System</fs-label>
-        <fs-device-os
-          [type]="trustedDevice.device.type"
-          [os]="trustedDevice.device.osType"
-          [showName]="true">
-        </fs-device-os>
-      </fs-label-field>
-      <fs-label-field *ngIf="trustedDevice.device">
-        <fs-label>Browser</fs-label>
-        <fs-device-browser
-          [type]="trustedDevice.device.browserType"
-          [showName]="true"
-        ></fs-device-browser>
-      </fs-label-field>
-      <fs-label-field *ngIf="trustedDevice.ip">
-        <fs-label>Location</fs-label>
-        <fs-ip
-          [ip]="trustedDevice.ip.ip"
-          [country]="trustedDevice.ip.country"
-          [region]="trustedDevice.ip.region"
-          [lat]="trustedDevice.ip.lat"
-          [lng]="trustedDevice.ip.lng">
-        </fs-ip>
-      </fs-label-field>
-      <fs-label-field *ngIf="trustedDevice.account">
-        <fs-label>Account</fs-label>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <fs-badge shape="circle" image="{{ trustedDevice.account.avatarUrl }}"></fs-badge>
-          <div fxLayout="column">
-            {{ trustedDevice.account.name }}
-            <small *ngIf="trustedDevice.account.email">{{ trustedDevice.account.email }}</small>
-          </div>
-        </div>
-      </fs-label-field>
-      <fs-label-field>
-        <fs-label>Last Active</fs-label>
-        {{ trustedDevice.signinDate | fsDateAgo }}
-      </fs-label-field>
-      <fs-label-field>
-        <fs-label>Added</fs-label>
-        {{ trustedDevice.createDate | fsDateAgo }}
-      </fs-label-field>
+<div class="trusted-device">
+  <div class="device">
+    <fs-device-os
+      *ngIf="trustedDevice.device"
+      [type]="trustedDevice.device.type"
+      [os]="trustedDevice.device.osType"
+      [version]="trustedDevice.device.osVersion">
+    </fs-device-os>
+  </div>
+  <div class="column">
+    <fs-device-browser
+      *ngIf="trustedDevice.device"
+      [type]="trustedDevice.device.browserType"
+      [showName]="true"
+      [version]="trustedDevice.device.browserVersion"
+      [showIcon]="false">
+    </fs-device-browser>
+    <fs-country
+      *ngIf="trustedDevice.ip" 
+      [matTooltip]="trustedDevice.ip.ip"
+      [code]="trustedDevice.ip.country" [region]="trustedDevice.ip.region">
+    </fs-country>
+    <div *ngIf="currentDevice; else activityDate" class="current-device">
+      <fs-trusted-current-device [tooltip]="false"></fs-trusted-current-device> Your current session
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button
-      mat-button
-      type="button"
-      color="primary"
-      mat-dialog-close>
-      Close
-    </button>
-    <button
-      mat-button
-      type="button"
-      (click)="signOut()">
-      Sign Out
-    </button>
-    <button
-      mat-button
-      type="button"
-      (click)="delete()">
-      Remove
-    </button>
-  </mat-dialog-actions>
-</fs-dialog>
+    <ng-template #activityDate>
+      <div class="activity-date" *ngIf="trustedDevice.activityDate">
+        <fs-date-ago [date]="trustedDevice.activityDate"></fs-date-ago>
+      </div>
+    </ng-template>
+  </div>
+  
+</div>
