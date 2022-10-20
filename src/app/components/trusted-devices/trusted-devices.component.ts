@@ -15,12 +15,12 @@ import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { FsPrompt } from '@firestitch/prompt';
 import { FsMessage } from '@firestitch/message';
 
-import { from, Observable, Subject } from 'rxjs';
-import { concatMap, finalize, map, switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
+import { from, Observable, Subject, throwError } from 'rxjs';
+import { concatMap, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
-import { FsTrustedDeviceDialogComponent } from '../trusted-device-dialog/trusted-device-dialog.component';
+import { FsTrustedDeviceDialogComponent } from '../trusted-device-dialog';
 import { trustedDeviceDelete } from '../../helpers';
 
 
@@ -74,7 +74,11 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
       },
     });
 
-    dialogRef.afterClosed()
+    dialogRef
+    .afterClosed()
+      .pipe(
+        takeUntil(this._destroy$),
+      )
       .subscribe(() => this.listComponent.reload());
   }
 
@@ -84,20 +88,20 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
   }
 
   public signOutAll(): void {
-    const trustedDevices$ = this.listComponent.getData()
-        .map((trustedDevice) => this.trustedDeviceSignOut(trustedDevice));
+    this._signoutPrompt(true)
+    .pipe(
+      switchMap(()=> {
+        const trustedDevices$ = this.listComponent.getData()
+          .filter((trustedDevice) => !trustedDevice.currentDevice)
+          .map((trustedDevice) => this.trustedDeviceSignOut(trustedDevice));
 
-    if(trustedDevices$.length) {
-      this._signoutPrompt(true)
-      .pipe(
-        switchMap(()=>from(trustedDevices$)),
-        concatMap((req) => req),
-        takeUntil(this._destroy$),
-      )
-        .subscribe(() => {
-          this._message.success('Signed out all trusted devices')
-        });
-    }
+        return trustedDevices$.length ? from(trustedDevices$) : throwError('There are no trusted devices to signout of')
+      }),
+      concatMap((req) => req),
+      finalize(() => this._message.success('Signed out all active devices')),
+      takeUntil(this._destroy$),
+    )
+      .subscribe();
   }
 
   public deleteAll(): void {
@@ -106,28 +110,31 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
     if(trustedDevices$) {
       this._deletePrompt()
-      .pipe(
-        switchMap(() => from(trustedDevices$)),
-        concatMap((req) => req),
-        takeUntil(this._destroy$),
-      ).subscribe(() => {
-        this._message.success('Deleted all trusted devices');
-        this.listComponent.reload();
-      });
+        .pipe(
+          switchMap(() => from(trustedDevices$)),
+          concatMap((req) => req),
+          takeUntil(this._destroy$),
+        )
+        .subscribe(() => {
+          this._message.success('Deleted all trusted devices');
+          this.listComponent.reload();
+        });
     }
   }
 
   private _signoutPrompt(all): Observable<any> {
     return this._prompt.confirm({
       title: all ? 'Sign Out All Devices' : 'Sign Out Device',
-      template: `This will remove account access for any signed in ${all ? 'devices' : 'device'}`,
+      template: all ?
+       'This will sign out all active devices, excluding your current session.'
+       : 'This will sign out all active devices.',
       commitLabel: 'Sign Out'
     })
   }
 
   private _deletePrompt(): Observable<any> {
     return this._prompt.confirm({
-      title: 'Sign Out & Delete All Devices',
+      title: 'Sign Out Devices & Delete All',
       template: `This will remove account access for any signed in devices and remove the trusted device permanently`,
       commitLabel: 'Delete'
     })
@@ -135,6 +142,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   private _initListConfig(): void {
     this.listConfig = {
+      paging: false,
       rowActions: [
         {
           click: (data) => {
@@ -143,6 +151,9 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
                 switchMap(() => this.trustedDeviceSignOut(data))
               )
               .subscribe();
+          },
+          show: (trustedDevice) => {
+            return !trustedDevice.currentDevice;
           },
           menu: true,
           label: 'Sign Out',
