@@ -15,7 +15,7 @@ import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { FsPrompt } from '@firestitch/prompt';
 import { FsMessage } from '@firestitch/message';
 
-import { from, Observable, Subject, throwError } from 'rxjs';
+import { from, Observable, of, Subject, throwError } from 'rxjs';
 import { concatMap, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { ITrustedDevice } from '../../interfaces/trusted-device';
@@ -87,56 +87,77 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public signOutAll(): void {
-    this._signoutPrompt(true)
-    .pipe(
-      switchMap(()=> {
-        const trustedDevices$ = this.listComponent.getData()
-          .filter((trustedDevice) => !trustedDevice.currentDevice)
-          .map((trustedDevice) => this.trustedDeviceSignOut(trustedDevice));
+  public signOutAll(): Observable<any> {
+    const observable$ = new Subject();
 
-        return trustedDevices$.length ? from(trustedDevices$) : throwError('There are no trusted devices to signout of')
-      }),
-      concatMap((req) => req),
-      finalize(() => this._message.success('Signed out all active devices')),
-      takeUntil(this._destroy$),
-    )
-      .subscribe();
+    this._signoutPrompt(true)
+      .pipe(
+        switchMap(()=> {
+          const trustedDevices$ = this.listComponent.getData()
+            .filter((trustedDevice) => !trustedDevice.currentDevice)
+            .map((trustedDevice) => this.trustedDeviceSignOut(trustedDevice));
+
+          return trustedDevices$.length ? from(trustedDevices$) : throwError('There are no trusted devices to signout of');
+        }),
+        concatMap((req) => req),
+        finalize(() => this._message.success('Signed out all active sessions')),
+        takeUntil(this._destroy$),
+      )
+        .subscribe({
+          next: () => {
+            observable$.next();
+            observable$.complete();
+          },
+          error: (error) => observable$.error(error)
+        });
+
+    return observable$    
+      .pipe(
+        takeUntil(this._destroy$),
+      );
   }
 
-  public deleteAll(): void {
-    const trustedDevices$ = this.listComponent.getData()
-      .map((trustedDevice) => trustedDeviceDelete(trustedDevice, this.trustedDeviceDelete, this.trustedDeviceSignOut));
-
-    if(trustedDevices$) {
-      this._deletePrompt()
-        .pipe(
-          switchMap(() => from(trustedDevices$)),
-          concatMap((req) => req),
-          takeUntil(this._destroy$),
-        )
-        .subscribe(() => {
+  public deleteAll(): Observable<any> {
+    const observable$ = new Subject();
+    this._prompt.confirm({
+      title: 'Sign Out & Delete All',
+      template: `This will sign out all active sessions, excluding your current session, and remove all trusted devices permanently. 2-Step Verification will be required again.`,
+      commitLabel: 'Sign Out & Delete'
+    })
+      .pipe(
+        switchMap(() => {
+          const trustedDevices$ = this.listComponent.getData()
+            .map((trustedDevice) => trustedDeviceDelete(trustedDevice, this.trustedDeviceDelete, this.trustedDeviceSignOut));
+          
+          return trustedDevices$.length ? from(trustedDevices$) : throwError('There are no trusted devices to delete');
+        }),
+        concatMap((req) => req),
+        takeUntil(this._destroy$),
+      )
+      .subscribe({
+        next: () => {
           this._message.success('Deleted all trusted devices');
           this.listComponent.reload();
-        });
-    }
+
+          observable$.next();
+          observable$.complete();
+        },
+        error: (error) => observable$.error(error),
+      });
+
+    return observable$
+      .pipe(
+        takeUntil(this._destroy$),
+      );
   }
 
   private _signoutPrompt(all): Observable<any> {
     return this._prompt.confirm({
-      title: all ? 'Sign Out All Devices' : 'Sign Out Device',
+      title: all ? 'Sign Out All' : 'Sign Out',
       template: all ?
-       'This will sign out all active devices, excluding your current session.'
-       : 'This will sign out all active devices.',
+       'This will sign out all active sessions, excluding your current session. 2-Step Verification will be required again.'
+       : 'This will sign out all active sessions. 2-Step Verification will be required again.',
       commitLabel: 'Sign Out'
-    })
-  }
-
-  private _deletePrompt(): Observable<any> {
-    return this._prompt.confirm({
-      title: 'Sign Out Devices & Delete All',
-      template: `This will remove account access for any signed in devices and remove the trusted device permanently`,
-      commitLabel: 'Delete'
     })
   }
 
@@ -168,8 +189,8 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
             )
           },
           remove: {
-            title: 'Sign Out & Delete Device',
-            template: 'This will remove account access for any signed in devices and remove the trusted device permanently',
+            title: 'Sign Out & Delete',
+            template: 'This will sign out all active sessions, excluding your current session, and remove the trusted devices permanently. 2-Step Verification may be required again.',
           },
           menu: true,
           label: 'Delete',
