@@ -49,6 +49,7 @@
     "@firestitch/chip": "^8.1.9",
     "@firestitch/clear": "^8.1.0",
     "@firestitch/common": "^8.0.12",
+    "@firestitch/component-tools": "^12.0.8",
     "@firestitch/core": "^9.1.2",
     "@firestitch/country": "^10.0.13",
     "@firestitch/date": "^8.0.26",
@@ -62,6 +63,7 @@
     "@firestitch/filter": "^9.9.7",
     "@firestitch/form": "^9.7.6",
     "@firestitch/iframe": "^10.0.4",
+    "@firestitch/ip": "^12.0.2",
     "@firestitch/label": "^8.2.10",
     "@firestitch/list": "^9.12.2",
     "@firestitch/mask": "^10.0.0",
@@ -75,7 +77,6 @@
     "@firestitch/selection": "^9.1.1",
     "@firestitch/skeleton": "^8.1.5",
     "@firestitch/store": "^8.1.2",
-    "@firestitch/ip": "^12.0.2",
     "codelyzer": "^6.0.0",
     "cpx": "^1.5.0",
     "cypress": "8.0.0",
@@ -105,8 +106,7 @@
     "tslint": "~6.1.0",
     "tsmodels": "^0.4.7",
     "typescript": "4.3.5",
-    "zone.js": "~0.11.4",
-    "@firestitch/component-tools": "^12.0.6"
+    "zone.js": "~0.11.4"
   },
   "engines": {
     "node": ">=6.0.0"
