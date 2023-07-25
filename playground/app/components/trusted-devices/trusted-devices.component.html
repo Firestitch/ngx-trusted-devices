@@ -1,7 +1,29 @@
 <fs-trusted-devices
-  *ngIf="trustedDevices"
-  [fetchTrustedDevices]="fetchTrustedDevices"
-  [removeTrustedDevice]="removeTrustedDevice"
-  [signOutTrustedDevice]="signOutTrustedDevice"
-  (accountClick)="accountClick($event)"
-></fs-trusted-devices>
+  [trustedDevicesFetch]="trustedDevicesFetch"
+  [trustedDeviceDelete]="trustedDeviceDelete"
+  [trustedDeviceSignOut]="trustedDeviceSignOut"
+  (accountClick)="accountClick($event)">
+</fs-trusted-devices>
+<br>
+<button
+    type="button"
+    (click)="signOutAll()"
+    mat-button>
+  Sign Out All
+</button>
+<button
+    type="button"
+    (click)="deleteAll()"
+    mat-button>
+  Delete All
+</button>
+
+<br><br><br>
+<fs-trusted-device  
+  [currentDevice]="true"
+  [trustedDevice]="trustedDevicesData[0]">
+</fs-trusted-device>
+<br><br><br>
+<fs-trusted-device  
+  [trustedDevice]="trustedDevicesData[1]">
+</fs-trusted-device>

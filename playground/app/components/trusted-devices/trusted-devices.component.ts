@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { ITrustedDevice, ITrustedDeviceAccount } from '@firestitch/trusted-devices';
+import { FsTrustedDevicesComponent, ITrustedDevice, ITrustedDeviceAccount } from '@firestitch/trusted-devices';
 import { DeviceType, DeviceBrowser, DeviceOs } from '@firestitch/device';
 import { guid } from '@firestitch/common';
 
@@ -14,12 +14,16 @@ import { of } from 'rxjs';
 })
 export class TrustedDevicesComponent implements OnInit {
 
-  public trustedDevices: ITrustedDevice[] = null;
+  @ViewChild(FsTrustedDevicesComponent)
+  public trustedDevices: FsTrustedDevicesComponent;
 
-  constructor() { }
+  public trustedDevicesData: ITrustedDevice[] = null;
 
   public ngOnInit(): void {
-    this.trustedDevices = [
+    const activityDate = (new Date());
+    activityDate.setHours((new Date()).getHours() - 1);
+
+    this.trustedDevicesData = [
       {
         id: Math.random(),
         account: {
@@ -38,11 +42,13 @@ export class TrustedDevicesComponent implements OnInit {
           browserName: 'Chrome',
           userAgent: 'Mozilla/5.0',
         },
-        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
-        activityDate: new Date(),
+        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":"Kassel"},
+        signinDate: new Date(),
         createDate: new Date(),
+        activityDate,
         guid: guid(),
         state: 'active',
+        currentDevice: true,
       },
       {
         id: Math.random(),
@@ -63,28 +69,37 @@ export class TrustedDevicesComponent implements OnInit {
           userAgent: 'Mozilla/5.0',
         },
         ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
-        activityDate: new Date(),
+        signinDate: new Date(),
         createDate: new Date(),
         guid: guid(),
+        activityDate,
         state: 'active',
       },
     ];
   }
 
-  public fetchTrustedDevices = (query) => {
+  public trustedDevicesFetch = (query) => {
     return of({
-      data: this.trustedDevices,
+      data: this.trustedDevicesData,
     });
   }
 
-  public removeTrustedDevice = (data) => {
-    console.log('Removed', data);
+  public trustedDeviceDelete = (data) => {
+    console.log('Deleted', data);
     return of(data);
   }
 
-  public signOutTrustedDevice = (data) => {
+  public trustedDeviceSignOut = (data) => {
     console.log('Sign Out', data);
     return of(data);
+  }
+
+  public signOutAll() {
+    this.trustedDevices.signOutAll();
+  }
+
+  public deleteAll() {
+    this.trustedDevices.deleteAll();
   }
 
   public accountClick(account: ITrustedDeviceAccount): void {

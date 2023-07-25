@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { FsListModule } from '@firestitch/list';
 import { FsDateModule } from '@firestitch/date';
@@ -10,8 +13,11 @@ import { FsCountryModule } from '@firestitch/country';
 import { FsDeviceModule } from '@firestitch/device';
 import { FsIpModule } from '@firestitch/ip';
 import { FsBadgeModule } from '@firestitch/badge';
+import { FsDialogModule } from '@firestitch/dialog';
+import { FsLabelModule } from '@firestitch/label';
 
-import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-devices.component';
+import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-device/trusted-current-device.component';
+import { FsTrustedDeviceDialogComponent, FsTrustedDeviceComponent, FsTrustedDevicesComponent } from './components';
 
 
 @NgModule({
@@ -20,6 +26,9 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
     FlexLayoutModule,
 
     MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
 
     FsListModule,
     FsDateModule,
@@ -27,20 +36,20 @@ import { FsTrustedDevicesComponent } from './components/trusted-devices/trusted-
     FsDeviceModule,
     FsBadgeModule,
     FsIpModule,
+    FsDialogModule,
+    FsLabelModule,
   ],
   exports: [
     FsTrustedDevicesComponent,
+    FsTrustedCurrentDeviceComponent,
+    FsTrustedDeviceComponent,
   ],
   declarations: [
     FsTrustedDevicesComponent,
+    FsTrustedCurrentDeviceComponent,
+    FsTrustedDeviceDialogComponent,
+    FsTrustedDeviceComponent,
   ],
-  providers: [],
 })
 export class FsTrustedDevicesModule {
-  // static forRoot(): ModuleWithProviders<FsTrustedDevicesModule> {
-  //   return {
-  //     ngModule: FsTrustedDevicesModule,
-  //     providers: [FsDeviceModule.forRoot().providers]
-  //   };
-  // }
 }

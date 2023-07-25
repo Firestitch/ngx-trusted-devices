@@ -1,0 +1,50 @@
+.trusted-device {
+  display: flex;
+  align-items: center;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .device {
+    position: relative;
+    fs-trusted-current-device {
+      position: absolute;
+      top: -8px;
+      right: 8px;
+    }
+  }
+
+  fs-country {
+    flex-direction: row-reverse;
+    justify-content: start;
+
+    ::ng-deep {
+      .name {
+        margin: 0 4px 0 0 !important;
+      }
+    }
+  }
+
+  .current-device {
+    display: flex;
+    align-items: center;
+
+    fs-trusted-current-device {
+      margin-right: 3px;
+    }
+  }
+
+  .activity-date {
+    margin-top: 3px;
+  }
+
+  
+  fs-country,
+  .activity-date,
+  .current-device {
+    margin-top: 3px;
+  }
+}

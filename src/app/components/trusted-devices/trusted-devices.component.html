@@ -10,13 +10,17 @@
       </div>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="OS">
+  <fs-list-column title="Device" class="col-device" align="center" width="1%">
     <ng-template fs-list-cell let-row="row">
-      <fs-device-os
-        *ngIf="row.device"
-        [type]="row.device.type"
-        [os]="row.device.osType"
-      ></fs-device-os>
+      <div class="container">
+        <fs-trusted-current-device *ngIf="row.currentDevice"></fs-trusted-current-device>
+        <fs-device-os
+          *ngIf="row.device"
+          [type]="row.device.type"
+          [os]="row.device.osType"
+          (click)="openTrustedDeviceDialog(row)">
+        </fs-device-os>
+      </div>
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Browser">
@@ -25,18 +29,14 @@
         *ngIf="row.device"
         [type]="row.device.browserType"
         [showName]="true"
+        (click)="openTrustedDeviceDialog(row)"
       ></fs-device-browser>
-    </ng-template>
-  </fs-list-column>
-  <fs-list-column title="Added">
-    <ng-template fs-list-cell let-row="row">
-      {{ row.createDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Location">
     <ng-template fs-list-cell let-row="row">
       <fs-ip
-        *ngIf="row.ip"
+        *ngIf="row.ip?.country"
         [ip]="row.ip.ip"
         [country]="row.ip.country"
         [region]="row.ip.region"
@@ -45,9 +45,14 @@
       </fs-ip>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Last signed in">
+  <fs-list-column title="Last Active">
     <ng-template fs-list-cell let-row="row">
       {{ row.activityDate | fsDateAgo }}
+    </ng-template>
+  </fs-list-column>
+  <fs-list-column title="Added">
+    <ng-template fs-list-cell let-row="row">
+      {{ row.createDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
 </fs-list>
