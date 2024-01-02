@@ -1,11 +1,11 @@
 <fs-list [config]="listConfig">
   <fs-list-column title="Account" [show]="false" name="account">
     <ng-template fs-list-cell let-row="row">
-      <div *ngIf="row.account" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+      <div *ngIf="row.account" class="fs-row.gap-small">
         <fs-badge shape="circle" image="{{ row.account.avatarUrl }}"></fs-badge>
-        <div fxLayout="column">
+        <div>
           {{ row.account.name }}
-          <small *ngIf="row.account.email">{{ row.account.email }}</small>
+          <div *ngIf="row.account.email">{{ row.account.email }}</div>
         </div>
       </div>
     </ng-template>

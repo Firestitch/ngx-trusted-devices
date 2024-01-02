@@ -29,11 +29,11 @@
       </fs-label-field>
       <fs-label-field *ngIf="trustedDevice.account">
         <fs-label>Account</fs-label>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div class="fs-row.gap-small">
           <fs-badge shape="circle" image="{{ trustedDevice.account.avatarUrl }}"></fs-badge>
-          <div fxLayout="column">
+          <div>
             {{ trustedDevice.account.name }}
-            <small *ngIf="trustedDevice.account.email">{{ trustedDevice.account.email }}</small>
+            <div *ngIf="trustedDevice.account.email">{{ trustedDevice.account.email }}</div>
           </div>
         </div>
       </fs-label-field>

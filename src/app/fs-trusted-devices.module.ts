@@ -1,29 +1,27 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgModule } from '@angular/core';
 
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { FsListModule } from '@firestitch/list';
-import { FsDateModule } from '@firestitch/date';
-import { FsCountryModule } from '@firestitch/country';
-import { FsDeviceModule } from '@firestitch/device';
-import { FsIpModule } from '@firestitch/ip';
 import { FsBadgeModule } from '@firestitch/badge';
+import { FsCountryModule } from '@firestitch/country';
+import { FsDateModule } from '@firestitch/date';
+import { FsDeviceModule } from '@firestitch/device';
 import { FsDialogModule } from '@firestitch/dialog';
+import { FsIpModule } from '@firestitch/ip';
 import { FsLabelModule } from '@firestitch/label';
+import { FsListModule } from '@firestitch/list';
 
+import { FsTrustedDeviceComponent, FsTrustedDeviceDialogComponent, FsTrustedDevicesComponent } from './components';
 import { FsTrustedCurrentDeviceComponent } from './components/trusted-current-device/trusted-current-device.component';
-import { FsTrustedDeviceDialogComponent, FsTrustedDeviceComponent, FsTrustedDevicesComponent } from './components';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    FlexLayoutModule,
 
     MatIconModule,
     MatTooltipModule,
