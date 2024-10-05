@@ -83,7 +83,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._destroy$.next();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 
@@ -105,7 +105,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
       )
         .subscribe({
           next: () => {
-            observable$.next();
+            observable$.next(null);
             observable$.complete();
           },
           error: (error) => observable$.error(error)
@@ -139,7 +139,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
           this._message.success('Deleted all trusted devices');
           this.listComponent.reload();
 
-          observable$.next();
+          observable$.next(null);
           observable$.complete();
         },
         error: (error) => observable$.error(error),
