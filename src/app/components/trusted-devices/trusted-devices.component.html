@@ -1,17 +1,35 @@
 <fs-list [config]="listConfig">
-  <fs-list-column title="Account" [show]="false" name="account">
-    <ng-template fs-list-cell let-row="row">
-      <div *ngIf="row.account" class="fs-row.gap-small">
-        <fs-badge shape="circle" image="{{ row.account.avatarUrl }}"></fs-badge>
+  <fs-list-column
+      title="Account"
+      [show]="false"
+      name="account">
+    <ng-template
+        fs-list-cell
+        let-row="row">
+      <div
+          *ngIf="row.account"
+          class="fs-row.gap-small">
+        <fs-badge
+          shape="circle"
+          image="{{ row.account.avatarUrl }}">
+        </fs-badge>
         <div>
           {{ row.account.name }}
-          <div *ngIf="row.account.email">{{ row.account.email }}</div>
+          <div *ngIf="row.account.email">
+            {{ row.account.email }}
+          </div>
         </div>
       </div>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Device" class="col-device" align="center" width="1%">
-    <ng-template fs-list-cell let-row="row">
+  <fs-list-column
+      title="Device"
+      class="col-device"
+      align="center"
+      width="1%">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       <div class="container">
         <fs-trusted-current-device *ngIf="row.currentDevice"></fs-trusted-current-device>
         <fs-device-os
@@ -24,17 +42,21 @@
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Browser">
-    <ng-template fs-list-cell let-row="row">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       <fs-device-browser
         *ngIf="row.device"
         [type]="row.device.browserType"
         [showName]="true"
-        (click)="openTrustedDeviceDialog(row)"
-      ></fs-device-browser>
+        (click)="openTrustedDeviceDialog(row)">
+      </fs-device-browser>
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Location">
-    <ng-template fs-list-cell let-row="row">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       <fs-ip
         *ngIf="row.ip?.country"
         [ip]="row.ip.ip"
@@ -45,13 +67,17 @@
       </fs-ip>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Last Sign In">
-    <ng-template fs-list-cell let-row="row">
+  <fs-list-column title="Last sign in">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       {{ row.activityDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Added">
-    <ng-template fs-list-cell let-row="row">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       {{ row.createDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>

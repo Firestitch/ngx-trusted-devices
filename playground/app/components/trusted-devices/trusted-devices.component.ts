@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { FsTrustedDevicesComponent, ITrustedDevice, ITrustedDeviceAccount } from '@firestitch/trusted-devices';
-import { DeviceType, DeviceBrowser, DeviceOs } from '@firestitch/device';
 import { guid } from '@firestitch/common';
+import { DeviceBrowser, DeviceOs, DeviceType } from '@firestitch/device';
+import { FsTrustedDevicesComponent, ITrustedDevice, ITrustedDeviceAccount } from '@firestitch/trusted-devices';
 
 import { of } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'trusted-devices',
   templateUrl: './trusted-devices.component.html',
-  styleUrls: ['./trusted-devices.component.scss']
+  styleUrls: ['./trusted-devices.component.scss'],
 })
 export class TrustedDevicesComponent implements OnInit {
 
@@ -42,7 +42,7 @@ export class TrustedDevicesComponent implements OnInit {
           browserName: 'Chrome',
           userAgent: 'Mozilla/5.0',
         },
-        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":"Kassel"},
+        ip: { 'id':2135,'ip':'157.90.30.65','lat':51.2993,'lng':9.491,'country':'DE','region':'Kassel' },
         signinDate: new Date(),
         createDate: new Date(),
         activityDate,
@@ -68,7 +68,7 @@ export class TrustedDevicesComponent implements OnInit {
           browserVersion: '1.0.0',
           userAgent: 'Mozilla/5.0',
         },
-        ip: {"id":2135,"ip":"157.90.30.65","lat":51.2993,"lng":9.491,"country":"DE","region":""},
+        ip: { 'id':2135,'ip':'157.90.30.65','lat':51.2993,'lng':9.491,'country':'DE','region':'' },
         signinDate: new Date(),
         createDate: new Date(),
         guid: guid(),
@@ -82,17 +82,19 @@ export class TrustedDevicesComponent implements OnInit {
     return of({
       data: this.trustedDevicesData,
     });
-  }
+  };
 
   public trustedDeviceDelete = (data) => {
     console.log('Deleted', data);
+
     return of(data);
-  }
+  };
 
   public trustedDeviceSignOut = (data) => {
     console.log('Sign Out', data);
+
     return of(data);
-  }
+  };
 
   public signOutAll() {
     this.trustedDevices.signOutAll();

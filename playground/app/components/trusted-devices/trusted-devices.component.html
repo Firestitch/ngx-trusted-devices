@@ -9,21 +9,22 @@
     type="button"
     (click)="signOutAll()"
     mat-button>
-  Sign Out All
+  Sign out all
 </button>
 <button
     type="button"
     (click)="deleteAll()"
     mat-button>
-  Delete All
+  Delete all
 </button>
-
-<br><br><br>
-<fs-trusted-device  
+<br>
+<br>
+<br>
+<fs-trusted-device
   [currentDevice]="true"
   [trustedDevice]="trustedDevicesData[0]">
 </fs-trusted-device>
-<br><br><br>
-<fs-trusted-device  
-  [trustedDevice]="trustedDevicesData[1]">
-</fs-trusted-device>
+<br>
+<br>
+<br>
+<fs-trusted-device [trustedDevice]="trustedDevicesData[1]"></fs-trusted-device>

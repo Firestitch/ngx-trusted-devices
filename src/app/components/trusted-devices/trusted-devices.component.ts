@@ -1,33 +1,33 @@
 import {
-  Component,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
-  OnInit,
+  Component,
+  EventEmitter,
+  Input,
   OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
 import { FsListComponent, FsListConfig } from '@firestitch/list';
-import { FsPrompt } from '@firestitch/prompt';
 import { FsMessage } from '@firestitch/message';
+import { FsPrompt } from '@firestitch/prompt';
 
-import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { from, Observable, Subject, throwError } from 'rxjs';
 import { concatMap, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
+import { trustedDeviceDelete } from '../../helpers';
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
 import { FsTrustedDeviceDialogComponent } from '../trusted-device-dialog';
-import { trustedDeviceDelete } from '../../helpers';
 
 
 @Component({
   selector: 'fs-trusted-devices',
   templateUrl: './trusted-devices.component.html',
-  styleUrls: [ './trusted-devices.component.scss' ],
+  styleUrls: ['./trusted-devices.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
@@ -51,7 +51,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  public constructor(
+  constructor(
     private _message: FsMessage,
     private _prompt: FsPrompt,
     private _dialog: MatDialog,
@@ -75,7 +75,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
     });
 
     dialogRef
-    .afterClosed()
+      .afterClosed()
       .pipe(
         takeUntil(this._destroy$),
       )
@@ -103,13 +103,13 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
         finalize(() => this._message.success('Signed out all active sessions')),
         takeUntil(this._destroy$),
       )
-        .subscribe({
-          next: () => {
-            observable$.next(null);
-            observable$.complete();
-          },
-          error: (error) => observable$.error(error)
-        });
+      .subscribe({
+        next: () => {
+          observable$.next(null);
+          observable$.complete();
+        },
+        error: (error) => observable$.error(error),
+      });
 
     return observable$    
       .pipe(
@@ -120,9 +120,9 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
   public deleteAll(): Observable<any> {
     const observable$ = new Subject();
     this._prompt.confirm({
-      title: 'Sign Out & Delete All',
-      template: `This will sign out all active sessions, excluding your current session, and remove all trusted devices permanently. 2-Step Verification will be required again.`,
-      commitLabel: 'Sign Out & Delete'
+      title: 'Sign out & delete all',
+      template: 'This will sign out all active sessions, excluding your current session, and remove all trusted devices permanently. 2-Step Verification will be required again.',
+      commitLabel: 'Sign out & delete',
     })
       .pipe(
         switchMap(() => {
@@ -153,12 +153,12 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 
   private _signoutPrompt(all): Observable<any> {
     return this._prompt.confirm({
-      title: all ? 'Sign Out All' : 'Sign Out',
+      title: all ? 'Sign out all' : 'Sign out',
       template: all ?
-       'This will sign out all active sessions, excluding your current session. 2-Step Verification will be required again.'
-       : 'This will sign out all active sessions. 2-Step Verification will be required again.',
-      commitLabel: 'Sign Out'
-    })
+        'This will sign out all active sessions, excluding your current session. 2-Step Verification will be required again.'
+        : 'This will sign out all active sessions. 2-Step Verification will be required again.',
+      commitLabel: 'Sign out',
+    });
   }
 
   private _initListConfig(): void {
@@ -169,7 +169,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
           click: (data) => {
             this._signoutPrompt(false)
               .pipe(
-                switchMap(() => this.trustedDeviceSignOut(data))
+                switchMap(() => this.trustedDeviceSignOut(data)),
               )
               .subscribe();
           },
@@ -177,7 +177,7 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
             return !trustedDevice.currentDevice;
           },
           menu: true,
-          label: 'Sign Out',
+          label: 'Sign out',
         },
         {
           click: (data) => {
@@ -186,10 +186,10 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
                 tap(() => {
                   this._message.success('Deleted trusted device');
                 }),
-            )
+              );
           },
           remove: {
-            title: 'Sign Out & Delete',
+            title: 'Sign out & delete',
             template: 'This will sign out all active sessions, excluding your current session, and remove the trusted devices permanently. 2-Step Verification may be required again.',
           },
           menu: true,

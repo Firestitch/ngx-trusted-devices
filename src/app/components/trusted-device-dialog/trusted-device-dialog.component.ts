@@ -1,27 +1,27 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Inject,
-  ChangeDetectionStrategy,
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { FsPrompt } from '@firestitch/prompt';
 import { FsMessage } from '@firestitch/message';
+import { FsPrompt } from '@firestitch/prompt';
 
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, switchMap, filter } from 'rxjs/operators';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
-import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { trustedDeviceDelete } from '../../helpers';
-import { NavigationStart, Router } from '@angular/router';
+import { ITrustedDevice } from '../../interfaces/trusted-device';
 
 
 @Component({
   templateUrl: './trusted-device-dialog.component.html',
-  styleUrls: [ './trusted-device-dialog.component.scss' ],
+  styleUrls: ['./trusted-device-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsTrustedDeviceDialogComponent implements OnDestroy, OnInit {
@@ -55,13 +55,13 @@ export class FsTrustedDeviceDialogComponent implements OnDestroy, OnInit {
         takeUntil(this._destroy$),
       )
       .subscribe(() => {
-       this.close();
+        this.close();
       });
   }
 
   public delete(): void {
     this._prompt.confirm({
-      title: 'Sign Out & Delete Device',
+      title: 'Sign out & delete device',
       template: 'Are you sure you would like to delete this trusted device?',
     })
       .pipe(
