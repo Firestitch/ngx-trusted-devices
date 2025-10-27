@@ -5,12 +5,21 @@ import { DeviceBrowser, DeviceOs, DeviceType } from '@firestitch/device';
 import { FsTrustedDevicesComponent, ITrustedDevice, ITrustedDeviceAccount } from '@firestitch/trusted-devices';
 
 import { of } from 'rxjs';
+import { FsTrustedDevicesComponent as FsTrustedDevicesComponent_1 } from '../../../../src/app/components/trusted-devices/trusted-devices.component';
+import { MatButton } from '@angular/material/button';
+import { FsTrustedDeviceComponent } from '../../../../src/app/components/trusted-device/trusted-device.component';
 
 
 @Component({
-  selector: 'trusted-devices',
-  templateUrl: './trusted-devices.component.html',
-  styleUrls: ['./trusted-devices.component.scss'],
+    selector: 'trusted-devices',
+    templateUrl: './trusted-devices.component.html',
+    styleUrls: ['./trusted-devices.component.scss'],
+    standalone: true,
+    imports: [
+        FsTrustedDevicesComponent_1,
+        MatButton,
+        FsTrustedDeviceComponent,
+    ],
 })
 export class TrustedDevicesComponent implements OnInit {
 

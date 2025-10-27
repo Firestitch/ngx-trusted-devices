@@ -11,7 +11,7 @@ import {
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 
@@ -22,13 +22,27 @@ import { trustedDeviceDelete } from '../../helpers';
 import { ITrustedDevice } from '../../interfaces/trusted-device';
 import { ITrustedDeviceAccount } from '../../interfaces/trusted-device-account';
 import { FsTrustedDeviceDialogComponent } from '../trusted-device-dialog';
+import { FsBadgeModule } from '@firestitch/badge';
+import { FsTrustedCurrentDeviceComponent } from '../trusted-current-device/trusted-current-device.component';
+import { FsDeviceModule } from '@firestitch/device';
+import { FsIpModule } from '@firestitch/ip';
+import { FsDateModule } from '@firestitch/date';
 
 
 @Component({
-  selector: 'fs-trusted-devices',
-  templateUrl: './trusted-devices.component.html',
-  styleUrls: ['./trusted-devices.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-trusted-devices',
+    templateUrl: './trusted-devices.component.html',
+    styleUrls: ['./trusted-devices.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsListModule,
+        FsBadgeModule,
+        FsTrustedCurrentDeviceComponent,
+        FsDeviceModule,
+        FsIpModule,
+        FsDateModule,
+    ],
 })
 export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
 

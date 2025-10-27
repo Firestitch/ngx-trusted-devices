@@ -1,4 +1,4 @@
-export { FsTrustedDevicesModule } from './app/fs-trusted-devices.module';
+
 
 export { ITrustedDevice } from './app/interfaces/trusted-device';
 export { ITrustedDeviceAccount } from './app/interfaces/trusted-device-account';

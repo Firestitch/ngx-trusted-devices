@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
@@ -17,12 +17,35 @@ import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { trustedDeviceDelete } from '../../helpers';
 import { ITrustedDevice } from '../../interfaces/trusted-device';
+import { FsDialogModule } from '@firestitch/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { FsLabelModule } from '@firestitch/label';
+import { FsDeviceModule } from '@firestitch/device';
+import { FsIpModule } from '@firestitch/ip';
+import { FsBadgeModule } from '@firestitch/badge';
+import { MatButton } from '@angular/material/button';
+import { FsDateModule } from '@firestitch/date';
 
 
 @Component({
-  templateUrl: './trusted-device-dialog.component.html',
-  styleUrls: ['./trusted-device-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './trusted-device-dialog.component.html',
+    styleUrls: ['./trusted-device-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsDialogModule,
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        FsLabelModule,
+        FsDeviceModule,
+        FsIpModule,
+        FsBadgeModule,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+        FsDateModule,
+    ],
 })
 export class FsTrustedDeviceDialogComponent implements OnDestroy, OnInit {
 
