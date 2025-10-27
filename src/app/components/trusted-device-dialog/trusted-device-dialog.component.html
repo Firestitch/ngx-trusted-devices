@@ -4,54 +4,64 @@
   </h1>
   <mat-dialog-content>
     <div class="content">
-      <fs-label-field *ngIf="trustedDevice.device">
-        <fs-label>
-          Operating System
-        </fs-label>
-        <fs-device-os
-          [type]="trustedDevice.device.type"
-          [os]="trustedDevice.device.osType"
-          [showName]="true">
-        </fs-device-os>
-      </fs-label-field>
-      <fs-label-field *ngIf="trustedDevice.device">
-        <fs-label>
-          Browser
-        </fs-label>
-        <fs-device-browser
-          [type]="trustedDevice.device.browserType"
-          [showName]="true">
-        </fs-device-browser>
-      </fs-label-field>
-      <fs-label-field *ngIf="trustedDevice.ip">
-        <fs-label>
-          Location
-        </fs-label>
-        <fs-ip
-          [ip]="trustedDevice.ip.ip"
-          [country]="trustedDevice.ip.country"
-          [region]="trustedDevice.ip.region"
-          [lat]="trustedDevice.ip.lat"
-          [lng]="trustedDevice.ip.lng">
-        </fs-ip>
-      </fs-label-field>
-      <fs-label-field *ngIf="trustedDevice.account">
-        <fs-label>
-          Account
-        </fs-label>
-        <div class="fs-row.gap-sm">
-          <fs-badge
-            shape="circle"
-            image="{{ trustedDevice.account.avatarUrl }}">
-          </fs-badge>
-          <div>
-            {{ trustedDevice.account.name }}
-            <div *ngIf="trustedDevice.account.email">
-              {{ trustedDevice.account.email }}
+      @if (trustedDevice.device) {
+        <fs-label-field>
+          <fs-label>
+            Operating System
+          </fs-label>
+          <fs-device-os
+            [type]="trustedDevice.device.type"
+            [os]="trustedDevice.device.osType"
+            [showName]="true">
+          </fs-device-os>
+        </fs-label-field>
+      }
+      @if (trustedDevice.device) {
+        <fs-label-field>
+          <fs-label>
+            Browser
+          </fs-label>
+          <fs-device-browser
+            [type]="trustedDevice.device.browserType"
+            [showName]="true">
+          </fs-device-browser>
+        </fs-label-field>
+      }
+      @if (trustedDevice.ip) {
+        <fs-label-field>
+          <fs-label>
+            Location
+          </fs-label>
+          <fs-ip
+            [ip]="trustedDevice.ip.ip"
+            [country]="trustedDevice.ip.country"
+            [region]="trustedDevice.ip.region"
+            [lat]="trustedDevice.ip.lat"
+            [lng]="trustedDevice.ip.lng">
+          </fs-ip>
+        </fs-label-field>
+      }
+      @if (trustedDevice.account) {
+        <fs-label-field>
+          <fs-label>
+            Account
+          </fs-label>
+          <div class="fs-row.gap-sm">
+            <fs-badge
+              shape="circle"
+              image="{{ trustedDevice.account.avatarUrl }}">
+            </fs-badge>
+            <div>
+              {{ trustedDevice.account.name }}
+              @if (trustedDevice.account.email) {
+                <div>
+                  {{ trustedDevice.account.email }}
+                </div>
+              }
             </div>
           </div>
-        </div>
-      </fs-label-field>
+        </fs-label-field>
+      }
       <fs-label-field>
         <fs-label>
           Last sign in
@@ -68,22 +78,22 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button
-        mat-button
-        type="button"
-        color="primary"
-        mat-dialog-close>
+      mat-button
+      type="button"
+      color="primary"
+      mat-dialog-close>
       Close
     </button>
     <button
-        mat-button
-        type="button"
-        (click)="signOut()">
+      mat-button
+      type="button"
+      (click)="signOut()">
       Sign out
     </button>
     <button
-        mat-button
-        type="button"
-        (click)="delete()">
+      mat-button
+      type="button"
+      (click)="delete()">
       Delete
     </button>
   </mat-dialog-actions>

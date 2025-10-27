@@ -1,33 +1,46 @@
 <div class="trusted-device">
   <div class="device">
-    <fs-device-os
-      *ngIf="trustedDevice.device"
-      [type]="trustedDevice.device.type"
-      [os]="trustedDevice.device.osType"
-      [version]="trustedDevice.device.osVersion">
-    </fs-device-os>
+    @if (trustedDevice.device) {
+      <fs-device-os
+        [type]="trustedDevice.device.type"
+        [os]="trustedDevice.device.osType"
+        [version]="trustedDevice.device.osVersion">
+      </fs-device-os>
+    }
   </div>
   <div class="column">
-    <fs-device-browser
-      *ngIf="trustedDevice.device"
-      [type]="trustedDevice.device.browserType"
-      [showName]="true"
-      [version]="trustedDevice.device.browserVersion"
-      [showIcon]="false">
-    </fs-device-browser>
-    <fs-country
-      *ngIf="trustedDevice.ip" 
-      [matTooltip]="trustedDevice.ip.ip"
-      [code]="trustedDevice.ip.country" [region]="trustedDevice.ip.region">
-    </fs-country>
-    <div *ngIf="currentDevice; else activityDate" class="current-device small">
-      <fs-trusted-current-device [tooltip]="false"></fs-trusted-current-device> Your current session
-    </div>
-    <ng-template #activityDate>
-      <div class="activity-date small" *ngIf="trustedDevice.activityDate">
-        <fs-date-ago [date]="trustedDevice.activityDate"></fs-date-ago>
+    @if (trustedDevice.device) {
+      <fs-device-browser
+        [type]="trustedDevice.device.browserType"
+        [showName]="true"
+        [version]="trustedDevice.device.browserVersion"
+        [showIcon]="false">
+      </fs-device-browser>
+    }
+    @if (trustedDevice.ip) {
+      <fs-country
+        [matTooltip]="trustedDevice.ip.ip"
+        [code]="trustedDevice.ip.country" [region]="trustedDevice.ip.region">
+      </fs-country>
+    }
+    @if (currentDevice) {
+      <div class="current-device small">
+        <fs-trusted-current-device [tooltip]="false"></fs-trusted-current-device> Your current session
       </div>
+    } @else {
+      @if (trustedDevice.activityDate) {
+        <div class="activity-date small">
+          <fs-date-ago [date]="trustedDevice.activityDate"></fs-date-ago>
+        </div>
+      }
+    }
+    <ng-template #activityDate>
+      @if (trustedDevice.activityDate) {
+        <div class="activity-date small">
+          <fs-date-ago [date]="trustedDevice.activityDate"></fs-date-ago>
+        </div>
+      }
     </ng-template>
   </div>
-  
+
 </div>

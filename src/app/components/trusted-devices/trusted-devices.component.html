@@ -1,83 +1,91 @@
 <fs-list [config]="listConfig">
   <fs-list-column
-      title="Account"
-      [show]="false"
-      name="account">
+    title="Account"
+    [show]="false"
+    name="account">
     <ng-template
-        fs-list-cell
-        let-row="row">
-      <div
-          *ngIf="row.account"
+      fs-list-cell
+      let-row="row">
+      @if (row.account) {
+        <div
           class="fs-row.gap-sm">
-        <fs-badge
-          shape="circle"
-          image="{{ row.account.avatarUrl }}">
-        </fs-badge>
-        <div>
-          {{ row.account.name }}
-          <div *ngIf="row.account.email">
-            {{ row.account.email }}
+          <fs-badge
+            shape="circle"
+            image="{{ row.account.avatarUrl }}">
+          </fs-badge>
+          <div>
+            {{ row.account.name }}
+            @if (row.account.email) {
+              <div>
+                {{ row.account.email }}
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
     </ng-template>
   </fs-list-column>
   <fs-list-column
-      title="Device"
-      class="col-device"
-      align="center"
-      width="1%">
+    title="Device"
+    class="col-device"
+    align="center"
+    width="1%">
     <ng-template
-        fs-list-cell
-        let-row="row">
+      fs-list-cell
+      let-row="row">
       <div class="container">
-        <fs-trusted-current-device *ngIf="row.currentDevice"></fs-trusted-current-device>
-        <fs-device-os
-          *ngIf="row.device"
-          [type]="row.device.type"
-          [os]="row.device.osType"
-          (click)="openTrustedDeviceDialog(row)">
-        </fs-device-os>
+        @if (row.currentDevice) {
+          <fs-trusted-current-device></fs-trusted-current-device>
+        }
+        @if (row.device) {
+          <fs-device-os
+            [type]="row.device.type"
+            [os]="row.device.osType"
+            (click)="openTrustedDeviceDialog(row)">
+          </fs-device-os>
+        }
       </div>
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Browser">
     <ng-template
-        fs-list-cell
-        let-row="row">
-      <fs-device-browser
-        *ngIf="row.device"
-        [type]="row.device.browserType"
-        [showName]="true"
-        (click)="openTrustedDeviceDialog(row)">
-      </fs-device-browser>
+      fs-list-cell
+      let-row="row">
+      @if (row.device) {
+        <fs-device-browser
+          [type]="row.device.browserType"
+          [showName]="true"
+          (click)="openTrustedDeviceDialog(row)">
+        </fs-device-browser>
+      }
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Location">
     <ng-template
-        fs-list-cell
-        let-row="row">
-      <fs-ip
-        *ngIf="row.ip?.country"
-        [ip]="row.ip.ip"
-        [country]="row.ip.country"
-        [region]="row.ip.region"
-        [lat]="row.ip.lat"
-        [lng]="row.ip.lng">
-      </fs-ip>
+      fs-list-cell
+      let-row="row">
+      @if (row.ip?.country) {
+        <fs-ip
+          [ip]="row.ip.ip"
+          [country]="row.ip.country"
+          [region]="row.ip.region"
+          [lat]="row.ip.lat"
+          [lng]="row.ip.lng">
+        </fs-ip>
+      }
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Last sign in">
     <ng-template
-        fs-list-cell
-        let-row="row">
+      fs-list-cell
+      let-row="row">
       {{ row.activityDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Added">
     <ng-template
-        fs-list-cell
-        let-row="row">
+      fs-list-cell
+      let-row="row">
       {{ row.createDate | fsDateAgo }}
     </ng-template>
   </fs-list-column>
