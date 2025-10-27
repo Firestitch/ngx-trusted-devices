@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
@@ -48,24 +42,18 @@ import { FsDateModule } from '@firestitch/date';
     ],
 })
 export class FsTrustedDeviceDialogComponent implements OnDestroy, OnInit {
+  private _data = inject(MAT_DIALOG_DATA);
+  private _prompt = inject(FsPrompt);
+  private _message = inject(FsMessage);
+  private _dialogRef = inject<MatDialogRef<FsTrustedDeviceDialogComponent>>(MatDialogRef);
+  private _router = inject(Router);
+
 
   public trustedDevice: ITrustedDevice = null;
   public trustedDeviceDelete: (trustedDevice: ITrustedDevice) => Observable<any>;
   public trustedDeviceSignOut: (trustedDevice:  ITrustedDevice) => Observable<any>;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private _data: {
-      trustedDevice: ITrustedDevice;
-      trustedDeviceDelete: (trustedDevice: ITrustedDevice) => Observable<any>;
-      trustedDeviceSignOut: (trustedDevice:  ITrustedDevice) => Observable<any>;
-    },
-    private _prompt: FsPrompt,
-    private _message: FsMessage,
-    private _dialogRef: MatDialogRef<FsTrustedDeviceDialogComponent>,
-    private _router: Router,
-  ) {}
 
   public ngOnInit(): void {
     this.trustedDevice = this._data.trustedDevice;

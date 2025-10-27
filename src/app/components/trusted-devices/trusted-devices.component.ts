@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -45,6 +36,10 @@ import { FsDateModule } from '@firestitch/date';
     ],
 })
 export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
+  private _message = inject(FsMessage);
+  private _prompt = inject(FsPrompt);
+  private _dialog = inject(MatDialog);
+
 
   @Input()
   public trustedDevicesFetch: (query: any) => Observable<{
@@ -64,12 +59,6 @@ export class FsTrustedDevicesComponent implements OnInit, OnDestroy {
   public listConfig: FsListConfig;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    private _message: FsMessage,
-    private _prompt: FsPrompt,
-    private _dialog: MatDialog,
-  ) { }
 
   public ngOnInit(): void {
     this._initListConfig();
